@@ -20,7 +20,7 @@ class MonteCarloSimulator:
         # The prompt provided specific code, so let's stick as close to the prompt's provided code as possible
         # but with a slight tweak to make RTP somewhat close to the expected when 'normal'
 
-        avg_win_needed = (rtp / 100.0) / hit_rate
+        avg_win_needed = (rtp / 100.0) / hit_rate if hit_rate > 0 else 0
         # For uniformity, uniform distribution average is (a+b)/2 = avg_win_needed
         # Let's say a = 0.5 * avg_win_needed, b = 1.5 * avg_win_needed
         # This way it averages out correctly.
