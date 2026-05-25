@@ -35,9 +35,9 @@ def simulate():
 
     # advertised_rtp may be passed as 'rtp'
     return jsonify(sim.simulate(
-        req_data['advertised_rtp'] if 'advertised_rtp' in req_data else req_data['rtp'],
-        req_data['volatility'],
-        req_data['hit_rate'],
+        req_data.get('advertised_rtp', req_data.get('rtp')),
+        req_data.get('volatility'),
+        req_data.get('hit_rate'),
         num_spins=num_spins,
         user_type=user_type
     ))
