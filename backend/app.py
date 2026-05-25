@@ -3,18 +3,16 @@ from flask_cors import CORS
 from models.game_model import db, Game
 from api.game_analysis import GameLinkProcessor
 from api.simulation_engine import MonteCarloSimulator
-from api.statistics_calculator import StatisticalAnalyzer
 import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.getcwd(), 'backend/database/game.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'database/game.db')
 db.init_app(app)
 with app.app_context(): db.create_all()
 
 proc = GameLinkProcessor()
 sim = MonteCarloSimulator()
-stats_calc = StatisticalAnalyzer()
 
 @app.route('/api/analyze-link', methods=['POST'])
 def analyze():
@@ -66,4 +64,4 @@ def generate_report():
     return jsonify({'report': summary_text, 'rtp_delta': rtp_delta})
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(host='0.0.0.0', port=5000)
