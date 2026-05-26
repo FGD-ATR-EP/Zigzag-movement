@@ -7,7 +7,9 @@ import os
 
 app = Flask(__name__)
 CORS(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'database/game.db')
+db_dir = os.path.join(os.path.abspath(os.path.dirname(__file__)), 'database')
+os.makedirs(db_dir, exist_ok=True)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(db_dir, 'game.db')
 db.init_app(app)
 with app.app_context(): db.create_all()
 
