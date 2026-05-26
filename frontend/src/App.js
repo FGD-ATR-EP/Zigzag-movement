@@ -15,14 +15,15 @@ const App = () => {
     setLoading(true);
     setReport(null);
     try {
-      const res = await axios.post(`${process.env.REACT_APP_API_URL || 'http://localhost:5000'}/api/analyze-link`, { url });
+      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const res = await axios.post(`${API_URL}/api/analyze-link`, { url });
       setData(res.data);
 
       const simReq = { ...res.data, num_spins: 100000, user_type: 'whale_locked' };
-      const s = await axios.post('http://localhost:5000/api/simulate', simReq);
+      const s = await axios.post(`${API_URL}/api/simulate`, simReq);
       setSim(s.data);
 
-      const rep = await axios.post('http://localhost:5000/api/forensic-report', {
+      const rep = await axios.post(`${API_URL}/api/forensic-report`, {
         game_info: res.data,
         sim_results: s.data
       });
