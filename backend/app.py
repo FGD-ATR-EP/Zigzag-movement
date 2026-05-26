@@ -64,4 +64,5 @@ def generate_report():
     return jsonify({'report': summary_text, 'rtp_delta': rtp_delta})
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    host = os.environ.get('FLASK_RUN_HOST', '127.0.0.1')
+    app.run(host=host, port=5000)
